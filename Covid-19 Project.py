@@ -23,7 +23,8 @@ predictedValues = []
 pPredictedValues = []   
 list3 = []
 cases = []
-                         
+
+#Creates and separates training and testing data based on result compatibility for each state
 for st in rawdata1_df['state'].unique():
     rawdata_case=rawdata1_df[rawdata1_df['state']==st][['date', 'positiveIncrease']]
 
@@ -78,6 +79,7 @@ for st in rawdata1_df['state'].unique():
     
     Y1_train, Y1_test, x1_train, x1_test = train_test_split(Y1, X1, test_size = bestValue1, random_state = 10)
 
+    #Employs polynomial regression to fit the training data and tests the results with the testing data
 
     predictedValue = None
     list1 = []
@@ -122,7 +124,7 @@ nData = {'State':  rawdata1_df['state'].unique().tolist(),
 
 
 #population2_df = population_df.merge(abbreviations_df, left_on='NAME', right_on='State')
-
+#Excludes states with outlier data distribution
 nDF = pd.DataFrame(data=nData)
 nDF = nDF[nDF.State != 'MP']
 nDF = nDF[nDF.State != 'GU']
@@ -144,7 +146,7 @@ nDF1['Probability'] = Probability
 #nDF1.sort_values(by=['Probability'], ascending=False)
 
 
-
+#Plots the final model results
 fig = plt.figure(figsize = (20, 12))  
 plt.bar(nDF1['State'], nDF1['predicted_values']) 
 plt.ylabel('Cases')
